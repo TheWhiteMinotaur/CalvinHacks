@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 
 win = pygame.display.set_mode((500,480))
-pygame.display.set_caption("First Game")
+pygame.display.set_caption("The RISE of BOB")
 
 attackRight = [pygame.image.load('Sprites/player1FaceScreenRight.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
              pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/player1FaceScreenRight.png')]
@@ -34,7 +34,7 @@ def redrawGameWindow():
     global walkCount
     
     win.blit(bg, (0,0))  
-    if walkCount + 1 >= 27:
+    if walkCount + 1 >= 28:
         walkCount = 0
         
     if left:  
@@ -44,14 +44,10 @@ def redrawGameWindow():
         win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
         walkCount += 1
     elif attack and preKey:
-        for i in attackRight:
-            win.blit(i, (x,y))
-            clock.tick(27)
+        win.blit(attackRight[walkCount//4], (x,y))
         walkCount += 1
     elif attack and not preKey:
-        for i in attackLeft:
-            win.blit(i, (x,y))
-            clock.tick(27)
+        win.blit(attackLeft[walkCount//4], (x,y))
         walkCount += 1
     elif preKey:
         win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x, y))
@@ -109,7 +105,7 @@ while run:
             jumpCount = 10
             isJump = False
 
-    redrawGameWindow() 
+    redrawGameWindow()
     
     
 pygame.quit()
