@@ -7,13 +7,14 @@ pygame.init()
 win = pygame.display.set_mode((500,480))
 pygame.display.set_caption("First Game")
 
-walkRight = [pygame.image.load('Sprites/player1FaceScreenRight.png')]
-walkLeft = [pygame.image.load('Sprites/player1FaceScreenLeft.png')]
+attackRight = [pygame.image.load('Sprites/player1FaceScreenRight.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
+             pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/player1FaceScreenRight.png')]
+attackLeft = [pygame.image.load('Sprites/player1FaceScreenLeft.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FLA2.png'),
+             pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/player1FaceScreenLeft.png')]
 bg = pygame.image.load('bg.jpg')
-char = pygame.image.load('Sprites/player1FaceScreenRight.png')
 
-x = 50
-y = 200
+x = 25
+y = 375
 width = 40
 height = 60
 vel = 5
@@ -23,6 +24,8 @@ clock = pygame.time.Clock()
 isJump = False
 jumpCount = 10
 
+preKey = True #True=Right  False=Left
+attack = False
 left = False
 right = False
 walkCount = 0
@@ -35,13 +38,26 @@ def redrawGameWindow():
         walkCount = 0
         
     if left:  
-        win.blit(walkLeft[0], (x,y))
+        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
         walkCount += 1                          
     elif right:
-        win.blit(walkRight[0], (x,y))
+        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
         walkCount += 1
+    elif attack and preKey:
+        for i in attackRight:
+            win.blit(i, (x,y))
+            clock.tick(27)
+        walkCount += 1
+    elif attack and not preKey:
+        for i in attackLeft:
+            win.blit(i, (x,y))
+            clock.tick(27)
+        walkCount += 1
+    elif preKey:
+        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x, y))
+        walkCount = 0
     else:
-        win.blit(char, (x, y))
+        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x, y))
         walkCount = 0
         
     pygame.display.update() 
@@ -63,11 +79,16 @@ while run:
         x -= vel
         left = True
         right = False
+        preKey = False
 
     elif keys[pygame.K_RIGHT] and x < 500 - vel - width:  
         x += vel
         left = False
         right = True
+        preKey = True
+        
+    elif keys[pygame.K_UP]:
+        attack = True
         
     else: 
         left = False
