@@ -13,10 +13,10 @@ attackLeft = [pygame.image.load('Sprites/player1FaceScreenLeft.png'), pygame.ima
              pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/player1FaceScreenLeft.png')]
 bg = pygame.image.load('bg.jpg')
 
-x = 25
-y = 375
-width = 40
-height = 60
+x = 240
+y = 80
+width = 15
+height = 20
 vel = 5
 
 clock = pygame.time.Clock()
@@ -32,14 +32,14 @@ walkCount = 0
 
 def redrawGameWindow():
     global walkCount
-    
-    win.blit(bg, (0,0))  
+
+    win.blit(bg, (0,0))
     if walkCount + 1 >= 27:
         walkCount = 0
-        
-    if left:  
+
+    if left:
         win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
-        walkCount += 1                          
+        walkCount += 1
     elif right:
         win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
         walkCount += 1
@@ -59,9 +59,9 @@ def redrawGameWindow():
     else:
         win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x, y))
         walkCount = 0
-        
-    pygame.display.update() 
-    
+
+    pygame.display.update()
+
 
 
 run = True
@@ -74,27 +74,27 @@ while run:
             run = False
 
     keys = pygame.key.get_pressed()
-    
-    if keys[pygame.K_LEFT] and x > vel: 
+
+    if keys[pygame.K_LEFT] and x > vel:
         x -= vel
         left = True
         right = False
         preKey = False
 
-    elif keys[pygame.K_RIGHT] and x < 500 - vel - width:  
+    elif keys[pygame.K_RIGHT] and x < 500 - vel - width:
         x += vel
         left = False
         right = True
         preKey = True
-        
+
     elif keys[pygame.K_UP]:
         attack = True
-        
-    else: 
+
+    else:
         left = False
         right = False
         walkCount = 0
-        
+
     if not(isJump):
         if keys[pygame.K_SPACE]:
             isJump = True
@@ -105,11 +105,11 @@ while run:
         if jumpCount >= -10:
             y -= (jumpCount * abs(jumpCount)) * 0.5
             jumpCount -= 1
-        else: 
+        else:
             jumpCount = 10
             isJump = False
 
-    redrawGameWindow() 
-    
-    
+    redrawGameWindow()
+
+
 pygame.quit()

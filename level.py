@@ -37,14 +37,16 @@ class Level:
     def parse(self, filename):
         with open(filename, 'r') as map_data:
             self.rawJSON = map_data.read()
-            data = json.loads(map_data.read())
+            data = json.loads(self.rawJSON)
             self.path = [[int(i) for i in a] for a in data["path"]]
             self.start_area = [int(i) for i in data["start_area"]]
-            self.events = [[int(i) for i in a] for a in data["events"]]
-            self.enemies = [int(i) for i in data["enemies"]]
+            #self.events = [[int(i) for i in a] for a in data["events"]]
+            #self.enemies = [int(i) for i in data["enemies"]]
 
     def is_point_in_path(self, point):
+        print(self.path)
         for area in self.path:
-            if (abs(point[0] - area[0]) < area[2] and abs(point[1] - area[1]) < area[3]):
+            if (point[0] - area[0] < area[2] and point[0] - area[0] >= 0 and
+                point[1] - area[1] < area[3] and point[1] - area[1] >= 0):
                 return True
         return False
