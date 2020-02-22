@@ -15,8 +15,12 @@
   ],
   "enemies": [
     {
-
-      "sprites": ["enemy1_left.png", "enemy1_right.png", "enemy1_attack.png"]
+      "health": 50,
+      "position": [],
+      "vision": 50,
+      "sprites": [
+        "player1FSL.png", "p1FLA1.png", "p1FLA2.png", "p1FLA3.png",
+        "player1FSR.png", "p1FRA1.png", "p1FRA2.png", "p1FRA3.png" ]
     }
   ]
 }

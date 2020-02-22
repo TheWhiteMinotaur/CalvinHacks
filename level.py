@@ -24,14 +24,16 @@ class Level:
         self.rawJSON = ""
         self.path = [[]]
         self.start_area = []
-        self.events = []
         self.enemies = []
         #self.player = Player()
 
     def parse_enemies(self, enemies):
         for e in enemies:
+            sprites = []
+            for s in data["sprites"]:
+                sprites.add(pygame.image.load('./' + s))
             self.enemies.add(Enemy(
-
+                e["health"], e["position"][0], e["position"][1], e["vision"], sprites 
             ))
 
     def parse(self, filename):
@@ -40,8 +42,7 @@ class Level:
             data = json.loads(self.rawJSON)
             self.path = [[int(i) for i in a] for a in data["path"]]
             self.start_area = [int(i) for i in data["start_area"]]
-            #self.events = [[int(i) for i in a] for a in data["events"]]
-            #self.enemies = [int(i) for i in data["enemies"]]
+            self.enemies = self.parse_enemies(data["enemies"])
 
     def is_point_in_path(self, point):
         print(self.path)
