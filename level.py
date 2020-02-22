@@ -20,11 +20,19 @@ import json
 
 class Level:
     def __init__(self):
+        # map data
         self.rawJSON = ""
         self.path = [[]]
         self.start_area = []
-        self.events = [[]]
+        self.events = []
         self.enemies = []
+        #self.player = Player()
+
+    def parse_enemies(self, enemies):
+        for e in enemies:
+            self.enemies.add(Enemy(
+
+            ))
 
     def parse(self, filename):
         with open(filename, 'r') as map_data:
@@ -40,5 +48,3 @@ class Level:
             if (abs(point[0] - area[0]) < area[2] and abs(point[1] - area[1]) < area[3]):
                 return True
         return False
-
-    
