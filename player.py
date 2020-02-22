@@ -1,4 +1,4 @@
-#Currently not my code
+#Partially not my code
 #Obtained from https://techwithtim.net/tutorials/game-development-with-python/pygame-tutorial/pygame-animation/
 
 import pygame
@@ -31,6 +31,7 @@ walkCount = 0
 
 def redrawGameWindow():
     global walkCount
+    global attack
     
     win.blit(bg, (0,0))  
     if walkCount + 1 >= 28:
@@ -67,9 +68,9 @@ def redrawGameWindow():
     else:
         win.blit(pygame.image.load('Sprites/p1FSL.png'), (x, y))
         walkCount = 0
-        
+
+    attack = False
     pygame.display.update() 
-    
 
 
 run = True
