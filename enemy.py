@@ -1,7 +1,7 @@
-import pygame
+import Entity from entity
 
 
-def Enemy():
+class Enemy(Entity):
     def __init__(self, health, sX, sY, color, size):
         super(health)
 
