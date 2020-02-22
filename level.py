@@ -16,7 +16,9 @@
 #   ]
 # }
 
+import pygame
 import json
+from enemy import Enemy
 
 class Level:
     def __init__(self):
@@ -30,10 +32,10 @@ class Level:
     def parse_enemies(self, enemies):
         for e in enemies:
             sprites = []
-            for s in data["sprites"]:
-                sprites.add(pygame.image.load('./' + s))
-            self.enemies.add(Enemy(
-                e["health"], e["position"][0], e["position"][1], e["vision"], sprites 
+            for s in e["sprites"]:
+                sprites.append(pygame.image.load('./Sprites/' + s))
+            self.enemies.append(Enemy(
+                e["health"], e["position"][0], e["position"][1], e["vision"], sprites
             ))
 
     def parse(self, filename):

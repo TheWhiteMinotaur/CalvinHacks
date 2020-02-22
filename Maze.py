@@ -31,7 +31,7 @@ def main():
 
     (x, y) = (240, 80)
 
-    s = pygame.image.load('Sprites/player1FaceScreenLeft.png')
+    s = pygame.image.load('Sprites/p1FSL.png')
     bg = pygame.image.load('./bg_test.png')
 
     clock = pygame.time.Clock()
