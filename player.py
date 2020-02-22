@@ -46,17 +46,23 @@ def redrawGameWindow():
         win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
         walkCount += 1
     elif up:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        if preKey:
+            win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        else:
+            win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
         walkCount += 1
     elif down:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        if preKey:
+            win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        else:
+            win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
         walkCount += 1
-
-    elif attack and preKey:
-        win.blit(attackRight[walkCount//4], (x,y))
-        walkCount += 1
-    elif attack and not preKey:
-        win.blit(attackLeft[walkCount//4], (x,y))
+    
+    if attack:
+        if preKey:
+            win.blit(attackRight[walkCount//4], (x,y))
+        else:
+            win.blit(attackLeft[walkCount//4], (x,y))
         walkCount += 1
     elif preKey:
         win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x, y))
@@ -98,7 +104,6 @@ while run:
         right = False
         down = False
         up = True
-        attack = True
 
     elif keys[pygame.K_DOWN] and y < 500 - vel - height:
         y += vel
@@ -106,6 +111,9 @@ while run:
         up = False
         right = False
         down = True
+        
+    elif keys[pygame.K_KP0]:
+        attack = True
         
     else: 
         left = False
