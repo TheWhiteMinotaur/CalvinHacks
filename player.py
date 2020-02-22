@@ -7,10 +7,10 @@ pygame.init()
 win = pygame.display.set_mode((500,480))
 pygame.display.set_caption("The RISE of BOB")
 
-attackRight = [pygame.image.load('Sprites/player1FaceScreenRight.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
-             pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/player1FaceScreenRight.png')]
-attackLeft = [pygame.image.load('Sprites/player1FaceScreenLeft.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FLA2.png'),
-             pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/player1FaceScreenLeft.png')]
+attackRight = [pygame.image.load('Sprites/p1FSR.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
+             pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FSR.png')]
+attackLeft = [pygame.image.load('Sprites/p1FSL.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FLA2.png'),
+             pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FSL.png')]
 bg = pygame.image.load('bg.jpg')
 
 x = 25
@@ -20,9 +20,6 @@ height = 60
 vel = 5
 
 clock = pygame.time.Clock()
-
-isJump = False
-jumpCount = 10
 
 preKey = True #True=Right  False=Left
 attack = False
@@ -40,22 +37,22 @@ def redrawGameWindow():
         walkCount = 0
         
     if left:  
-        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
+        win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1                          
     elif right:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
         walkCount += 1
     elif up:
         if preKey:
-            win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+            win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
         else:
-            win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
+            win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1
-    elif down:
+    else:
         if preKey:
-            win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+            win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
         else:
-            win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
+            win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1
     
     if attack:
@@ -65,10 +62,10 @@ def redrawGameWindow():
             win.blit(attackLeft[walkCount//4], (x,y))
         walkCount += 1
     elif preKey:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x, y))
+        win.blit(pygame.image.load('Sprites/p1FSR.png'), (x, y))
         walkCount = 0
     else:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x, y))
+        win.blit(pygame.image.load('Sprites/p1FSL.png'), (x, y))
         walkCount = 0
         
     pygame.display.update() 
@@ -112,27 +109,13 @@ while run:
         right = False
         down = True
         
-    elif keys[pygame.K_KP0]:
+    elif keys[pygame.K_SPACE]:
         attack = True
         
     else: 
         left = False
         right = False
         walkCount = 0
-        
-    if not(isJump):
-        if keys[pygame.K_SPACE]:
-            isJump = True
-            left = False
-            right = False
-            walkCount = 0
-    else:
-        if jumpCount >= -10:
-            y -= (jumpCount * abs(jumpCount)) * 0.5
-            jumpCount -= 1
-        else: 
-            jumpCount = 10
-            isJump = False
 
     redrawGameWindow()
     
