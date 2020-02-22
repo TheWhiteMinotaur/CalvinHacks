@@ -7,10 +7,10 @@ pygame.init()
 win = pygame.display.set_mode((500,480))
 pygame.display.set_caption("First Game")
 
-walkRight = [pygame.image.load('circle.png')]
-walkLeft = [pygame.image.load('circle.png')]
+walkRight = [pygame.image.load('player1.png')]
+walkLeft = [pygame.image.load('player1.png')]
 bg = pygame.image.load('bg.jpg')
-char = pygame.image.load('circle.png')
+char = pygame.image.load('player1.png')
 
 x = 50
 y = 200
