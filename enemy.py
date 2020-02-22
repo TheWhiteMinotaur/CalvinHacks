@@ -8,9 +8,9 @@ pygame.init()
 win = pygame.display.set_mode((1000, 500))
 pygame.display.set_caption("First Game")
 
-walkRight = [pygame.image.load('transparent-sprite-enemy-8.gif')]
+walkRight = [pygame.image.load('enemyReverse.png')]
 walkLeft = [pygame.image.load('transparent-sprite-enemy-8.gif')]
-walkUp = [pygame.image.load('transparent-sprite-enemy-8.gif')]
+walkUp = [pygame.image.load('enemyReverse.png')]
 walkDown = [pygame.image.load('transparent-sprite-enemy-8.gif')]
 bg = pygame.image.load('bg.jpg')
 char = pygame.image.load('transparent-sprite-enemy-8.gif')
@@ -75,7 +75,7 @@ while run:
         left = True
         right = False
 
-    elif keys[pygame.K_RIGHT] and x < 500 - vel - width:
+    elif keys[pygame.K_RIGHT] and x < 800 - vel - width:
         x += vel
         left = False
         right = True
@@ -86,7 +86,7 @@ while run:
         right = False
         up = True
 
-    elif keys[pygame.K_DOWN] and y < 500 - vel - height:
+    elif keys[pygame.K_DOWN] and y < 400 - vel - height:
         y += vel
         left = False
         right = False
@@ -117,15 +117,6 @@ while run:
     redrawGameWindow()
 
 pygame.quit()
-
-
-
-
-
-
-
-
-
 
 
 # def Enemy():
