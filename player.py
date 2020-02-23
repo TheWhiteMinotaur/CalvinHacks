@@ -1,16 +1,16 @@
-#Currently not my code
+#Partially not my code
 #Obtained from https://techwithtim.net/tutorials/game-development-with-python/pygame-tutorial/pygame-animation/
 
 import pygame
 pygame.init()
 
 win = pygame.display.set_mode((500,480))
-pygame.display.set_caption("First Game")
+pygame.display.set_caption("The RISE of BOB")
 
-attackRight = [pygame.image.load('Sprites/player1FaceScreenRight.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
-             pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/player1FaceScreenRight.png')]
-attackLeft = [pygame.image.load('Sprites/player1FaceScreenLeft.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FLA2.png'),
-             pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/player1FaceScreenLeft.png')]
+attackRight = [pygame.image.load('Sprites/p1FSR.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FRA2.png'),
+             pygame.image.load('Sprites/p1FRA3.png'), pygame.image.load('Sprites/p1FRA2.png'), pygame.image.load('Sprites/p1FRA1.png'), pygame.image.load('Sprites/p1FSR.png')]
+attackLeft = [pygame.image.load('Sprites/p1FSL.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FLA2.png'),
+             pygame.image.load('Sprites/p1FLA3.png'), pygame.image.load('Sprites/p1FLA2.png'), pygame.image.load('Sprites/p1FLA1.png'), pygame.image.load('Sprites/p1FSL.png')]
 bg = pygame.image.load('bg.jpg')
 
 x = 25
@@ -20,9 +20,6 @@ height = 60
 vel = 5
 
 clock = pygame.time.Clock()
-
-isJump = False
-jumpCount = 10
 
 preKey = True #True=Right  False=Left
 attack = False
@@ -34,43 +31,46 @@ walkCount = 0
 
 def redrawGameWindow():
     global walkCount
+    global attack
     
     win.blit(bg, (0,0))  
-    if walkCount + 1 >= 27:
+    if walkCount + 1 >= 28:
         walkCount = 0
         
     if left:  
-        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x,y))
+        win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1                          
     elif right:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
         walkCount += 1
     elif up:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+        if preKey:
+            win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
+        else:
+            win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1
-    elif down:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x,y))
+    else:
+        if preKey:
+            win.blit(pygame.image.load('Sprites/p1FSR.png'), (x,y))
+        else:
+            win.blit(pygame.image.load('Sprites/p1FSL.png'), (x,y))
         walkCount += 1
-
-    elif attack and preKey:
-        for i in attackRight:
-            win.blit(i, (x,y))
-            clock.tick(27)
-        walkCount += 1
-    elif attack and not preKey:
-        for i in attackLeft:
-            win.blit(i, (x,y))
-            clock.tick(27)
+    
+    if attack:
+        if preKey:
+            win.blit(attackRight[walkCount//4], (x,y))
+        else:
+            win.blit(attackLeft[walkCount//4], (x,y))
         walkCount += 1
     elif preKey:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenRight.png'), (x, y))
+        win.blit(pygame.image.load('Sprites/p1FSR.png'), (x, y))
         walkCount = 0
     else:
-        win.blit(pygame.image.load('Sprites/player1FaceScreenLeft.png'), (x, y))
+        win.blit(pygame.image.load('Sprites/p1FSL.png'), (x, y))
         walkCount = 0
-        
+
+    attack = False
     pygame.display.update() 
-    
 
 
 run = True
@@ -102,7 +102,6 @@ while run:
         right = False
         down = False
         up = True
-        attack = True
 
     elif keys[pygame.K_DOWN] and y < 500 - vel - height:
         y += vel
@@ -111,26 +110,15 @@ while run:
         right = False
         down = True
         
+    elif keys[pygame.K_SPACE]:
+        attack = True
+        
     else: 
         left = False
         right = False
         walkCount = 0
-        
-    if not(isJump):
-        if keys[pygame.K_SPACE]:
-            isJump = True
-            left = False
-            right = False
-            walkCount = 0
-    else:
-        if jumpCount >= -10:
-            y -= (jumpCount * abs(jumpCount)) * 0.5
-            jumpCount -= 1
-        else: 
-            jumpCount = 10
-            isJump = False
 
-    redrawGameWindow() 
+    redrawGameWindow()
     
     
 pygame.quit()
